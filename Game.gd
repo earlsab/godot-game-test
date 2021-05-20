@@ -1,15 +1,9 @@
 extends Node
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
+onready var player = preload("res://Player.tscn")
+onready var wall = preload("res://test_map.tscn")
 func _ready():
-	pass
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+	var p = player.instance()
+	var w = wall.instance()
+	add_child(p)
+	add_child(w)

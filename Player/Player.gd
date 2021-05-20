@@ -3,23 +3,23 @@ extends KinematicBody2D
 const GRAVITY = 20 
 const RESISTANCE = Vector2(0, -1)
 
-export var SWALK = 100
-export var RUN = 500
-export var WALK = 200
+export var SWALK = 200
+export var RUN = 400
+export var WALK = 300
 export var JUMP = -500
+ 
 
-# TODO: Find out the reason why calling for Vector2()
-# automatically changes movement
+# TODO: Update Notion, Vector2 directly changes node's position
 var movement = Vector2()
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	movement.y += GRAVITY
 	var moveState
 
 	# Movement States
-	if Input.is_action_pressed("ui_shift"):
+	if Input.is_action_pressed("ui_extra1"):
 		moveState = RUN
-	elif Input.is_action_pressed("ui_ctrl"):
+	elif Input.is_action_pressed("ui_shift"):
 		moveState = SWALK
 	else:
 		moveState = WALK
@@ -38,7 +38,7 @@ func _physics_process(delta):
 		$spr_player.play("Idle")
 	
 	# Jump
-	if Input.is_action_pressed("ui_up") and is_on_floor():
+	if Input.is_action_pressed("ui_jump") and is_on_floor():
 		movement.y = JUMP
 	else:
 		pass

@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-const GRAVITY = 10
+const GRAVITY = 20 
 const RESISTANCE = Vector2(0, -1)
 
 export var RUN = 200

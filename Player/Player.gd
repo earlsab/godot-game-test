@@ -25,6 +25,7 @@ func _physics_process(_delta):
 	else:
 		moveState = WALK
 
+	# Animation States
 	if is_on_floor():
 		animationState = "Run"
 	else:

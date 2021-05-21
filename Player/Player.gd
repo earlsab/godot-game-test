@@ -15,6 +15,7 @@ var movement = Vector2()
 func _physics_process(_delta):
 	movement.y += GRAVITY
 	var moveState
+	var animationState
 
 	# Movement States
 	if Input.is_action_pressed("ui_extra1"):
@@ -23,24 +24,31 @@ func _physics_process(_delta):
 		moveState = SWALK
 	else:
 		moveState = WALK
+
+	if is_on_floor():
+		animationState = "Run"
+	else:
+		animationState = "Jump"
 			
 	# Player Input
 	if Input.is_action_pressed("ui_right"):
 		movement.x = moveState
 		$spr_player.flip_h = false
-		$spr_player.play("Run")
+		$spr_player.play(animationState)
 	elif Input.is_action_pressed("ui_left"):
 		movement.x = -(moveState)
 		$spr_player.flip_h = true
-		$spr_player.play("Run")
+		$spr_player.play(animationState)
 	else:
 		movement.x = 0
-		$spr_player.play("Idle")
+		if is_on_floor():
+			$spr_player.play("Idle")
+		else:
+			$spr_player.play("Fall")
 	
 	# Jump
 	if Input.is_action_pressed("ui_jump") and is_on_floor():
 		movement.y = JUMP
-	else:
-		pass
+
 
 	movement = move_and_slide(movement, RESISTANCE)

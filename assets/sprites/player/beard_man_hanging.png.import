@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/beardmancrouchidle-Sheet.png-13f25eb3a612da3ca61ca409ddca2420.stex"
+path="res://.import/beard_man_hanging.png-e406e5e7958a357671d8b5e41cc01584.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/beardmancrouchidle-Sheet.png"
-dest_files=[ "res://.import/beardmancrouchidle-Sheet.png-13f25eb3a612da3ca61ca409ddca2420.stex" ]
+source_file="res://assets/sprites/player/beard_man_hanging.png"
+dest_files=[ "res://.import/beard_man_hanging.png-e406e5e7958a357671d8b5e41cc01584.stex" ]
 
 [params]
 

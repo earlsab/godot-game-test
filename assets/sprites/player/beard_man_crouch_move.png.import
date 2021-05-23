@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/beardmancrouchmove-Sheet.png-a3953e0ab307c90fe657d6341d21773f.stex"
+path="res://.import/beard_man_crouch_move.png-9d2cbfd89cc4911041eacb7e8173b6ba.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/beardmancrouchmove-Sheet.png"
-dest_files=[ "res://.import/beardmancrouchmove-Sheet.png-a3953e0ab307c90fe657d6341d21773f.stex" ]
+source_file="res://assets/sprites/player/beard_man_crouch_move.png"
+dest_files=[ "res://.import/beard_man_crouch_move.png-9d2cbfd89cc4911041eacb7e8173b6ba.stex" ]
 
 [params]
 

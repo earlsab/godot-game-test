@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/beardedmanidle.png-8fef675fb90a3f882cbc54bec4ab870d.stex"
+path="res://.import/beard_man_crouch_transition.png-424170a9baddc1b027540bfeba3d85fe.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/beardedmanidle.png"
-dest_files=[ "res://.import/beardedmanidle.png-8fef675fb90a3f882cbc54bec4ab870d.stex" ]
+source_file="res://assets/sprites/player/beard_man_crouch_transition.png"
+dest_files=[ "res://.import/beard_man_crouch_transition.png-424170a9baddc1b027540bfeba3d85fe.stex" ]
 
 [params]
 

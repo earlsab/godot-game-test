@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/beardmanrunright.png-6ed5019752df359ea80a371f8224ddd4.stex"
+path="res://.import/beard_man_jump.png-71dabecf2127dac946b8d33bd780df4c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/beardmanrunright.png"
-dest_files=[ "res://.import/beardmanrunright.png-6ed5019752df359ea80a371f8224ddd4.stex" ]
+source_file="res://assets/sprites/player/beard_man_jump.png"
+dest_files=[ "res://.import/beard_man_jump.png-71dabecf2127dac946b8d33bd780df4c.stex" ]
 
 [params]
 

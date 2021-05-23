@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/beardmanrunleft.png-ce4b84278342dbb8bcbf4ba45b541d55.stex"
+path="res://.import/beard_man_crouch_idle.png-8b9baf857bf57485147eb693ea58a471.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/beardmanrunleft.png"
-dest_files=[ "res://.import/beardmanrunleft.png-ce4b84278342dbb8bcbf4ba45b541d55.stex" ]
+source_file="res://assets/sprites/player/beard_man_crouch_idle.png"
+dest_files=[ "res://.import/beard_man_crouch_idle.png-8b9baf857bf57485147eb693ea58a471.stex" ]
 
 [params]
 

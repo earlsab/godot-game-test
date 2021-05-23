@@ -49,20 +49,15 @@ func _physics_process(_delta):
 	if Input.is_action_pressed("ui_right"):
 		movement.x = moveState
 		$spr_player.flip_h = false
-		# $spr_player.play(animationState)
 	elif Input.is_action_pressed("ui_left"):
 		movement.x = -(moveState)
 		$spr_player.flip_h = true
-		# $spr_player.play(animationState)
 	else:
 		movement.x = 0
-		# $spr_player.play(animationState)
 	$spr_player.play(animationState)
 	
 	# Jump
 	if Input.is_action_pressed("ui_jump") and is_on_floor():
 		movement.y = JUMP
-
-
 
 	movement = move_and_slide(movement, RESISTANCE)

@@ -52,4 +52,5 @@ func _physics_process(_delta):
 		movement.y = JUMP
 
 
+		
 	movement = move_and_slide(movement, RESISTANCE)

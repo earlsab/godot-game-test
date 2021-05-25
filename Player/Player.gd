@@ -7,34 +7,54 @@ const AIR_RESISTANCE = 0.02
 const GRAVITY = 200
 const JUMP_FORCE = 120
 
+onready var spr_player = $spr_player
 var motion = Vector2.ZERO
 
-func animation():
-	pass
-
-
 func _physics_process(delta):
-	
+
+	# Handles Left & Right Input
 	var x_input = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 
+	# Processes Input and changes motion.x accordingly
 	if x_input != 0:
 			motion.x += x_input * ACCELERATION * delta
 			motion.x = clamp(motion.x, -MAX_SPEED, MAX_SPEED)
-			
+					
+	# Processes if Jump is possible
 	if is_on_floor():
 		if x_input == 0:
+			# Introduces Ground Friction
 			motion.x = lerp(motion.x, 0, FRICTION)
-
 		if Input.is_action_just_pressed("ui_up"):
 			motion.y = -JUMP_FORCE
 	else:
 		if x_input == 0:
+			# Introduces Air Friction
 			motion.x = lerp(motion.x, 0, AIR_RESISTANCE)
 
-	animation()
-
-	motion.y += GRAVITY  * delta
+	motion.y += GRAVITY * delta
 
 	# TODO UNDERSTAND MOTION_AND_SLIDE()
 	motion = move_and_slide(motion, Vector2.UP)
+	animation_now(motion.x, motion.y)
 
+func animation_now(x, y):
+	# Animation Management for Simple Movement
+	# TODO
+	# [] Variable Idle
+	# [] Variable Run Speed
+	# [] Idle Crouch
+	# [] Moving Crouch
+
+	if y != 0:
+		spr_player.play("Jump")
+	elif x != 0:
+		spr_player.play("Run")
+	else:
+		spr_player.play("Idle")
+
+
+
+func animation_later():
+	# Purpose allows for expandibility for skill animations
+	pass

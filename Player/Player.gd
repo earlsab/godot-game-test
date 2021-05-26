@@ -36,24 +36,35 @@ func _physics_process(delta):
 
 	# TODO UNDERSTAND MOTION_AND_SLIDE()
 	motion = move_and_slide(motion, Vector2.UP)
-	animation_now(motion.x, motion.y)
+	animation_now(x_input, motion.y)
+	debugger(motion)
 
 func animation_now(x, y):
 	# Animation Management for Simple Movement
 	# TODO
+	# [/] Idle
+	# [/] Running
 	# [] Variable Idle
 	# [] Variable Run Speed
 	# [] Idle Crouch
 	# [] Moving Crouch
-
-	if y != 0:
-		spr_player.play("Jump")
-	elif x != 0:
-		spr_player.play("Run")
-	else:
+	
+	if x == 0 and y == 0:
 		spr_player.play("Idle")
+	else:
+		if y < 0:
+			spr_player.play("Jump")
+		elif y > 0:
+			spr_player.play("Fall")
+		elif x != 0:
+			spr_player.play("Run")
+		spr_player.flip_h = x < 0
+			
+	
 
 
+func debugger(m):
+	$debug.set_text(str(m))
 
 func animation_later():
 	# Purpose allows for expandibility for skill animations

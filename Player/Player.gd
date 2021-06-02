@@ -7,20 +7,25 @@ const AIR_RESISTANCE = 0.02
 const GRAVITY = 200
 const JUMP_FORCE = 120
 
-onready var spr_player = $spr_player
+var MOVE_ADJUST
 var motion = Vector2.ZERO
+onready var spr_player = $spr_player
+onready var extraInput = {}
+
 
 func _physics_process(delta):
-
-	# Handles Left & Right Input
+	# Handles Important Input
 	var x_input = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
+	
+	# Handles Extra Input
+	extraInput.Crouch = true if Input.is_action_pressed("ui_down") else false
 
 	# Processes Input and changes motion.x accordingly
 	if x_input != 0:
 			motion.x += x_input * ACCELERATION * delta
-			motion.x = clamp(motion.x, -MAX_SPEED, MAX_SPEED)
-					
-	# Processes if Jump is possible
+			motion.x = clamp(motion.x, (-(MAX_SPEED + MOVE_ADJUST)), (MAX_SPEED + MOVE_ADJUST))
+
+	# Friction & Jump Input
 	if is_on_floor():
 		if x_input == 0:
 			# Introduces Ground Friction
@@ -29,43 +34,46 @@ func _physics_process(delta):
 			motion.y = -JUMP_FORCE
 	else:
 		if x_input == 0:
-			# Introduces Air Friction
 			motion.x = lerp(motion.x, 0, AIR_RESISTANCE)
 
 	motion.y += GRAVITY * delta
 
 	# TODO UNDERSTAND MOTION_AND_SLIDE()
 	motion = move_and_slide(motion, Vector2.UP)
-	animation_now(x_input, motion.y)
-	debugger(motion)
 
-func animation_now(x, y):
-	# Animation Management for Simple Movement
-	# TODO
-	# [/] Idle
-	# [/] Running
-	# [] Variable Idle
-	# [] Variable Run Speed
-	# [] Idle Crouch
-	# [] Moving Crouch
-	
+	# ANIMATION
+	c_animation(x_input, motion.y, extraInput)
+
+	# VAR ADJUSTMENTS
+	c_adjust_movespeed(x_input, motion.y, extraInput)
+
+
+func c_animation(x, y, eI):
+	var idle
+	var move
+
+	if eI.Crouch == true:
+		idle = "CrouchIdle"
+		move = "CrouchMove"
+	else:
+		# Assumes Standing
+		idle = "Idle"
+		move = "Run"
+
 	if x == 0 and y == 0:
-		spr_player.play("Idle")
+		spr_player.play(idle)
 	else:
 		if y < 0:
 			spr_player.play("Jump")
 		elif y > 0:
 			spr_player.play("Fall")
 		elif x != 0:
-			spr_player.play("Run")
+			spr_player.play(move)
 		spr_player.flip_h = x < 0
-			
-	
 
 
-func debugger(m):
-	$debug.set_text(str(m))
-
-func animation_later():
-	# Purpose allows for expandibility for skill animations
-	pass
+func c_adjust_movespeed(x, y, eI):
+	if eI.Crouch == true and y == 0:
+		MOVE_ADJUST = -32
+	else:
+		MOVE_ADJUST = 0

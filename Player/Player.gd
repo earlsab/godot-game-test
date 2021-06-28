@@ -12,7 +12,7 @@ var motion = Vector2.ZERO
 onready var spr_player = $spr_player
 onready var extraInput = {}
 onready var basicAnimationIgnore = false
-onready var tele = false
+onready var skill = false
 onready var gravityIgnore = false
 
 func _physics_process(delta):
@@ -61,18 +61,20 @@ func _physics_process(delta):
 	motion = move_and_slide(motion, Vector2.UP)
 
 	# ANIMATION
-	c_basic_animation(x_input, motion.y, extraInput)
+	c_animations(x_input, motion.y, extraInput)
 
 	# VAR ADJUSTMENTS
-	c_adjust_movespeed(x_input, motion.y, extraInput)
+	c_adjust_movespeed(extraInput)
 
 	# SKILLS
 	c_skills(x_input, motion.y, extraInput)
 
 
-func c_basic_animation(x, y, eI):
+func c_animations(x, y, eI):
 	var idle
 	var move
+	basicAnimationIgnore = true if skill == true else false
+
 	if basicAnimationIgnore == false:
 		if eI.Crouch == true:
 			idle = "CrouchIdle"
@@ -94,30 +96,24 @@ func c_basic_animation(x, y, eI):
 			spr_player.flip_h = x < 0
 
 
-func c_adjust_movespeed(x, y, eI):
-	if eI.Crouch == true and is_on_floor():
-		MOVE_ADJUST = -32
-	else:
-		MOVE_ADJUST = 0
-
-func c_skills(x, y, eI):
-	
-	if eI.Teleport == true:
-		basicAnimationIgnore = true
-		spr_player.play("SkillTeleA")
-		tele = true
-		gravityIgnore = true
-		$cam_player.smoothing_speed = 5
-
-	elif eI.Teleport == false and tele == true:
-		spr_player.play("SkillTeleB")
+func c_adjust_movespeed(eI):
+	MOVE_ADJUST = -32 if eI.Crouch == true and is_on_floor() else 0
 		
 
+func c_skills(x, y, eI):
+	if eI.Teleport == true:
+		spr_player.play("SkillTeleA")
+		skill = true
+		# gravityIgnore = true
+		$cam_player.smoothing_speed = 7
+
+	elif eI.Teleport == false and skill == true:
+		spr_player.play("SkillTeleB")
+
+
 func _on_spr_player_animation_finished():
-	$col_player.disabled = true if extraInput.Teleport == true else false
-	if extraInput.Teleport == false and tele == true:
-		basicAnimationIgnore = false
-		tele = false
-		gravityIgnore = false
+	if extraInput.Teleport == false and skill == true:
+		skill = false
+		# gravityIgnore = false
 		$cam_player.smoothing_speed = 1
 		

@@ -287,56 +287,56 @@ atlas = ExtResource( 2 )
 region = Rect2( 224, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=70]
-atlas = ExtResource( 5 )
+atlas = ExtResource( 1 )
 region = Rect2( 0, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=71]
-atlas = ExtResource( 5 )
+atlas = ExtResource( 1 )
 region = Rect2( 32, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=72]
 atlas = ExtResource( 5 )
-region = Rect2( 64, 0, 32, 32 )
+region = Rect2( 0, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=73]
 atlas = ExtResource( 5 )
-region = Rect2( 0, 32, 32, 32 )
+region = Rect2( 32, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=74]
 atlas = ExtResource( 5 )
-region = Rect2( 32, 32, 32, 32 )
+region = Rect2( 64, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=75]
 atlas = ExtResource( 5 )
-region = Rect2( 64, 32, 32, 32 )
+region = Rect2( 0, 32, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=76]
 atlas = ExtResource( 5 )
-region = Rect2( 0, 64, 32, 32 )
+region = Rect2( 32, 32, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=77]
 atlas = ExtResource( 5 )
-region = Rect2( 32, 64, 32, 32 )
+region = Rect2( 64, 32, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=78]
 atlas = ExtResource( 5 )
-region = Rect2( 64, 64, 32, 32 )
+region = Rect2( 0, 64, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=79]
 atlas = ExtResource( 5 )
-region = Rect2( 0, 96, 32, 32 )
+region = Rect2( 32, 64, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=80]
 atlas = ExtResource( 5 )
-region = Rect2( 32, 96, 32, 32 )
+region = Rect2( 64, 64, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=81]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 32, 32 )
+atlas = ExtResource( 5 )
+region = Rect2( 0, 96, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=82]
-atlas = ExtResource( 1 )
-region = Rect2( 32, 0, 32, 32 )
+atlas = ExtResource( 5 )
+region = Rect2( 32, 96, 32, 32 )
 
 [sub_resource type="SpriteFrames" id=83]
 animations = [ {
@@ -375,15 +375,15 @@ animations = [ {
 "name": "CrouchMove",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 70 ), SubResource( 71 ), SubResource( 72 ), SubResource( 73 ), SubResource( 74 ), SubResource( 75 ), SubResource( 76 ), SubResource( 77 ), SubResource( 78 ), SubResource( 79 ), SubResource( 80 ) ],
-"loop": true,
-"name": "Run",
-"speed": 14.0
-}, {
-"frames": [ SubResource( 81 ), SubResource( 82 ) ],
+"frames": [ SubResource( 70 ), SubResource( 71 ) ],
 "loop": true,
 "name": "Jump",
 "speed": 5.0
+}, {
+"frames": [ SubResource( 72 ), SubResource( 73 ), SubResource( 74 ), SubResource( 75 ), SubResource( 76 ), SubResource( 77 ), SubResource( 78 ), SubResource( 79 ), SubResource( 80 ), SubResource( 81 ), SubResource( 82 ) ],
+"loop": true,
+"name": "Run",
+"speed": 14.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=84]
@@ -412,5 +412,7 @@ position = Vector2( 0, -8 )
 current = true
 smoothing_enabled = true
 smoothing_speed = 1.0
+
+[node name="Position2D" type="Position2D" parent="."]
 
 [connection signal="animation_finished" from="spr_player" to="." method="_on_spr_player_animation_finished"]

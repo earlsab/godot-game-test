@@ -10,6 +10,11 @@ const JUMP_FORCE = 120
 var MOVE_ADJUST
 var motion = Vector2.ZERO
 var click_pos = Vector2()
+var click_pos_mod
+
+onready var tele_count = get_node("Skill_Countdown")
+onready var tele_pos = get_node("/root/Main/HUD/Teleport_Position")
+onready var timer = get_node("Skill_Timer")
 onready var bullet_time_filter = get_node("/root/Main/HUD/BulletTimeIndicator")
 onready var error_filter = get_node("/root/Main/HUD/ErrorIndicator")
 onready var spr_player = $spr_player
@@ -18,15 +23,26 @@ onready var skill_input = {}
 onready var basic_animation_ignore = false
 onready var skill = false
 onready var gravity_ignore = false
+onready var skill_enable = false
+onready var timer_once = false
+
 
 func _unhandled_input(event):
 	if event.is_action_pressed('ui_click'):
 		click_pos = get_global_mouse_position()
+		click_pos_mod = click_pos
+		
+		# TODO Buggy offset feature. Might be setting teleport block based on the map position or self position or something idk
+		click_pos_mod.x += 124
+		click_pos_mod.y -= 20
+		tele_pos.set_position(click_pos_mod)
+
+
 
 # func _process(delta):
 # 	pass
 
-func _physics_process(delta):
+func _physics_process(delta): 
 	# Handles Important Input
 	var x_input = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	var y_input = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
@@ -75,9 +91,11 @@ func _physics_process(delta):
 	c_animations(x_input, motion.y, movement_input)
 
 	# VAR ADJUSTMENTS
+	# So far works by slowing the character down when crouching
 	c_adjust_movespeed(movement_input)
 
 	# SKILLS
+	# Checks if any skills are toggled
 	c_skills(x_input, motion.y, skill_input)
 
 func c_animations(x, y, mI) -> void:
@@ -99,7 +117,7 @@ func c_animations(x, y, mI) -> void:
 		else:
 			if y < 0:
 				spr_player.play("Jump")
-			elif y > 0:
+			elif y > 0: 
 				spr_player.play("Fall")
 			elif x != 0:
 				spr_player.play(move)
@@ -110,26 +128,51 @@ func c_adjust_movespeed(mI) -> void:
 	MOVE_ADJUST = -32 if mI.Crouch == true and is_on_floor() else 0
 		
 func c_skills(x, y, sI) -> void:
+	# TODO Teleport to only commence after 5 secs. Add room for future animations.
 	# This area is hard coded; Needs better implementation
 	if sI.Teleport == true:
-		if x == 0 and y == 0:
-			# Teleport 
-			bullet_time_filter.visible = true
-			error_filter.visible = false
-			self.position = click_pos
+		timer.set_wait_time(1)
+		tele_pos.visible = true 
+		if x == 0 and y == 0: # Checking system... if the character is not moving commit to launching teleportation sequence
+			if timer_once == false:	
+				timer.start()
+				timer_once = true
+			if skill_enable == false:
+				tele_count.set_text(str(timer.get_time_left()))	
+				error_filter.visible = true
+			elif skill_enable == true:
+				error_filter.visible = false
+				bullet_time_filter.visible = true
+				self.position = click_pos
 			
 		else:
 			# Teleport error
+			timer.stop()
+			timer_once = false
+			skill_enable = false
 			error_filter.visible = true
+			tele_pos.visible = false
 			bullet_time_filter.visible = false
 			pass
 	elif sI.Teleport == false:
 		# Either go teleport or cancel
+		timer_once = false
+		tele_count.set_text("")
+		timer.stop()
 		bullet_time_filter.visible = false
 		error_filter.visible = false
+		tele_pos.visible = false
 		
+func _on_spr_player_animation_finished() -> void:
+	if skill_input.Teleport == false and skill == true:
+		skill = false
+		# gravity_ignore = false
+		$cam_player.smoothing_speed = 1
 	
-	# if eI.Teleport == true:
+func _on_Timer_timeout():
+	skill_enable = true
+
+
 	# 	spr_player.play("SkillTeleA")
 	# 	skill = true
 	# 	# gravity_ignore = true
@@ -138,10 +181,3 @@ func c_skills(x, y, sI) -> void:
 	# elif eI.Teleport == false and skill == true:
 	# 	spr_player.play("SkillTeleB")
 
-
-func _on_spr_player_animation_finished() -> void:
-	if skill_input.Teleport == false and skill == true:
-		skill = false
-		# gravity_ignore = false
-		$cam_player.smoothing_speed = 1
-		

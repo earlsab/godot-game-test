@@ -7,8 +7,24 @@
 [node name="Main" type="Node"]
 
 [node name="test_map" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0.372345, 0.197067 )
 
 [node name="HUD" parent="." instance=ExtResource( 3 )]
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 32, 112 )
+
+[node name="Skill_Countdown" type="Label" parent="Player"]
+margin_left = -11.0
+margin_top = -70.0
+margin_right = 38.0
+margin_bottom = -39.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Teleport Timer"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Skill_Timer" type="Timer" parent="Player"]
+
+[connection signal="timeout" from="Player/Skill_Timer" to="Player" method="_on_Timer_timeout"]

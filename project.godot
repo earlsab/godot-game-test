@@ -27,6 +27,10 @@ window/stretch/aspect="keep"
 
 display=false
 ADB=false
+editor=false
+"external editor"=false
+"text edior"=false
+"text editor"=false
 
 [input]
 

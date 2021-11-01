@@ -22,3 +22,17 @@ color = Color( 0, 0.152941, 0.419608, 0.294118 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Teleport_Position" type="ColorRect" parent="."]
+anchor_left = 0.235
+anchor_top = 0.164
+anchor_right = 0.235
+anchor_bottom = 0.164
+margin_left = -4.93769
+margin_top = -4.95309
+margin_right = 5.06231
+margin_bottom = 5.04691
+color = Color( 0, 0.764706, 1, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
